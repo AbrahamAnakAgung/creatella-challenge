@@ -1,5 +1,6 @@
 import * as React from "react";
 import Spacer from "../Spacer/Spacer";
+import { relativeTime } from "../../utils/relativeTime";
 import db from "../../../db-1592200732327.json";
 
 function ImageList() {
@@ -14,7 +15,7 @@ function ImageList() {
 
   return (
     <div className='wrapper'>
-      <Spacer size={"20px"} />
+      <Spacer size={"20px"} inline='' />
       <div className='display-products'>
         {db.products.map(({ date, face, id, price, size }, index) => {
           return (
@@ -24,15 +25,15 @@ function ImageList() {
               </div>
               <div className='product-detail'>
                 <span className='bold'>$</span>
-                <span className='bold'>{price}</span>
+                <span className='bold product-price'>{price}</span>
               </div>
               <div className='product-detail'>
-                <span>Size:</span>
-                <span>{size} px</span>
+                <span className='product-label'>Size:</span>
+                <span className='bold product-unit'> {size}px</span>
               </div>
               <div className='product-detail'>
-                <span>Added:</span>
-                <span>{date}</span>
+                <span className='product-label'>Added:</span>
+                <span className='bold product-unit'> {relativeTime(date)}</span>
               </div>
             </div>
           );
