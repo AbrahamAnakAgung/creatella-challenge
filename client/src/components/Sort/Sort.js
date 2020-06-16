@@ -1,8 +1,6 @@
 import * as React from "react";
 
 function Sort({ onSortChange }) {
-  const [sortVal, setSortVal] = React.useState("size");
-
   return (
     <div className='sort-wrapper'>
       <label htmlFor='sort' className='sort-label'>
