@@ -10,4 +10,4 @@ const Spacer = ({ size, inline }) => (
   />
 );
 
-export default Spacer;
+export { Spacer };

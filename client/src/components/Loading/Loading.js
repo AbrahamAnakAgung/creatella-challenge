@@ -33,4 +33,4 @@ function useInterval(cb, delay) {
   }, [delay]);
 }
 
-export default Loading;
+export { Loading };
