@@ -2,10 +2,12 @@ import * as React from "react";
 import { displayPrice } from "../../utils/displayPrice";
 import { relativeTime } from "../../utils/relativeTime";
 
-function Product({ date, face, price, size, id }) {
+const Product = React.forwardRef((props, ref) => {
+  const { date, face, size, price } = props;
+
   return (
-    <div key={id} className='product'>
-      <div className='product-face bold'>
+    <div className='product' ref={ref}>
+      <div className='product-face'>
         <p style={{ fontSize: `${size}px` }}>{face}</p>
       </div>
       <div className='product-detail-wrapper'>
@@ -30,6 +32,6 @@ function Product({ date, face, price, size, id }) {
       </div>
     </div>
   );
-}
+});
 
 export { Product };
