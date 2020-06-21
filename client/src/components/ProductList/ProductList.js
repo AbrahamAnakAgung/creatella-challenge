@@ -6,8 +6,11 @@ import { Sort } from "../Sort/Sort";
 import { Product } from "../Product/Product";
 import { DisplayError } from "../DisplayError/DisplayError";
 import { End } from "../End/End";
-import { API, LIMIT, TOTAL_PRODUCTS } from "../../constants";
+import { fetchProducts, cacheNextBatch } from "../../utils/fetchController";
 import { isInViewport } from "../../utils/isInViewport";
+import { AdsContainer } from "../AdsContainer/AdsContainer";
+import { TopAd } from "../TopAd/TopAd";
+import { LOCAL_STORAGE_KEY } from "../../constants";
 
 function ProductList() {
   const [products, setProducts] = React.useState([]);
@@ -15,51 +18,68 @@ function ProductList() {
   // status: 'pending', 'success', 'error'
   const [fetchStatus, setFetchStatus] = React.useState("pending");
   const [hasMore, setHasMore] = React.useState(true);
+  const [sortBy, setSortBy] = React.useState("size");
+  const prevProducts = React.useRef([]);
 
-  // fetch product if pageNumber change
+  // fetch product if pageNumber or sort value change
   React.useEffect(() => {
-    const fetchProducts = (page) => {
-      setFetchStatus("pending");
-      fetch(`${API}?_page=${page}&_limit=${LIMIT}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setFetchStatus("success");
-          if (products.length >= TOTAL_PRODUCTS && data.length === 0) {
-            setHasMore(false);
-            return;
+    const fetchData = async (_page, _sort) => {
+      const localData = JSON.parse(
+        window.localStorage.getItem(LOCAL_STORAGE_KEY)
+      );
+      let prodData = {};
+
+      // if any data in localStorage, fetch it
+      if (localData !== null && localData.data.length > 0) {
+        prodData = localData;
+      } else {
+        // if no data fetch it from the server
+        prodData = await fetchProducts(_page, _sort);
+      }
+      // save the old data to ref
+      prevProducts.current = [...prevProducts.current, ...prodData.data];
+
+      setHasMore(prodData.hasMore);
+      setProducts(() => {
+        const combineData = [];
+        for (let i = 0; i < prevProducts.current.length; i++) {
+          // insert the ads
+          if (i % 20 === 0 && i !== 0) {
+            combineData.push({ id: "ads" }, prevProducts.current[i]);
+          } else {
+            combineData.push(prevProducts.current[i]);
           }
-          setProducts((prevProducts) => prevProducts.concat(data));
-        })
-        .catch((error) => {
-          setFetchStatus("error");
-          throw new Error(error);
-        });
+        }
+        return combineData;
+      });
+
+      setFetchStatus(prodData.status);
+      // fetch the next batch
+      cacheNextBatch(pageNumber + 1, sortBy);
     };
 
-    hasMore && fetchProducts(pageNumber);
-  }, [pageNumber]);
-
-  // sort event listener callback
-  const onSortChange = (e) => {
-    const sortBy = e.currentTarget.value;
-
     setFetchStatus("pending");
+    if (hasMore) {
+      fetchData(pageNumber, sortBy);
+    }
+  }, [pageNumber, sortBy]);
+
+  /**
+   * Select sort event handler
+   * @param {*} event
+   */
+  const onSortChange = (event) => {
+    // reset the state
     setHasMore(true);
     setProducts([]);
+    setPageNumber(1);
+    prevProducts.current = [];
+    window.localStorage.removeItem(LOCAL_STORAGE_KEY);
 
-    fetch(`${API}?_sort=${sortBy}&_limit=${LIMIT}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setFetchStatus("success");
-      })
-      .catch((error) => {
-        setFetchStatus("error");
-        throw new Error(error);
-      });
+    setSortBy(event.currentTarget.value);
   };
 
-  // infinite loop
+  // infinite scroll
   const lastElementRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -72,8 +92,11 @@ function ProductList() {
     };
 
     if (hasMore) {
+      // lastElementRef.current = document.querySelector('.last');
       window.addEventListener("scroll", debounce(handleScroll, 500));
     } else {
+      // stop watching
+      // lastElementRef.current = null;
       window.removeEventListener("scroll", handleScroll);
     }
     return () => window.removeEventListener("scroll", handleScroll);
@@ -81,26 +104,31 @@ function ProductList() {
 
   return (
     <div className='wrapper'>
-      <Spacer size={"20px"} inline='' />
+      <TopAd />
+      <Spacer size={"30px"} inline='' />
       <Sort onSortChange={onSortChange} />
       <Spacer size={"20px"} inline='' />
       <div className='display-products'>
         {products.map((product, idx) => {
-          if (idx === products.length - 1) {
+          if (product.id === "ads") {
             return (
-              <Product
-                {...product}
-                key={product.id + idx}
-                ref={lastElementRef}
+              <AdsContainer
+                className='img-wrapper'
+                key={product.id ? product.id + idx : idx}
               />
             );
           } else {
-            return <Product {...product} key={product.id + idx} />;
+            return (
+              <Product {...product} key={product.id ? product.id + idx : idx} />
+            );
           }
         })}
       </div>
       <Spacer size={"20px"} inline='' />
-      {fetchStatus === "pending" && <Loading />}
+      <div
+        className={hasMore ? "last" : "last hidden"}
+        ref={hasMore ? lastElementRef : null}></div>
+      {fetchStatus === "pending" && hasMore && <Loading />}
       {fetchStatus === "error" && <DisplayError />}
       <Spacer size={"20px"} inline='' />
       {!hasMore && <End />}
