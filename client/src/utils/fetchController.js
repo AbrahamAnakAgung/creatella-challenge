@@ -2,8 +2,7 @@ import { API, LIMIT, TOTAL_PRODUCTS, LOCAL_STORAGE_KEY } from "../constants";
 
 /**
  * fetch data from database
- * @param {number} page page number to fetch
- * @param {object[]} prod current products data
+ * @param {number} page pageNumber to fetch
  * @param {string} sort current sort value
  * @return {Promise<object>} status, data, hasMore
  */
@@ -14,7 +13,6 @@ export async function fetchProducts(page, sort) {
       `${API}?_page=${page}&_limit=${LIMIT}&_sort=${sort}`
     );
     const data = await res.json();
-    console.log('FETCH', data.length)
 
     if (data.length === 0 && page * LIMIT + data.length >= TOTAL_PRODUCTS) {
       return {
@@ -29,8 +27,9 @@ export async function fetchProducts(page, sort) {
       hasMore: true,
     };
   } catch (error) {
+    console.error(error);
     return {
-      status: error,
+      status: "error",
       data: [],
       hasMore: false,
     };
@@ -39,8 +38,7 @@ export async function fetchProducts(page, sort) {
 
 /**
  * fetch data from database and cache it to local storage
- * @param {number} page page number to fetch
- * @param {object[]} prod current products data
+ * @param {number} page pageNumber to fetch
  * @param {string} sort current sort value
  * @return {Promise<boolean>} True if success fetching otherwise false
  */

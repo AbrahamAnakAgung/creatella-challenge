@@ -1,6 +1,6 @@
 /**
- * recursive function to create random number from 0 - 1000
- * @return {*} random number
+ * function to create random number from 0 - 1000
+ * @return {number} random number
  */
 
 let prevRandom = 0;

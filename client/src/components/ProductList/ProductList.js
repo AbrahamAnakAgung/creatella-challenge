@@ -36,14 +36,14 @@ function ProductList() {
         // if no data fetch it from the server
         prodData = await fetchProducts(_page, _sort);
       }
-      // save the old data to ref
+      // save and combine raw product data to ref
       prevProducts.current = [...prevProducts.current, ...prodData.data];
 
       setHasMore(prodData.hasMore);
       setProducts(() => {
+        // insert the ads
         const combineData = [];
         for (let i = 0; i < prevProducts.current.length; i++) {
-          // insert the ads
           if (i % 20 === 0 && i !== 0) {
             combineData.push({ id: "ads" }, prevProducts.current[i]);
           } else {
@@ -85,7 +85,7 @@ function ProductList() {
   React.useEffect(() => {
     // Scroll handler
     const handleScroll = () => {
-      // check if element is in viwport and there is more content
+      // check if element is in viewport and there is more content
       if (isInViewport(lastElementRef.current) && hasMore) {
         setPageNumber((prevPageNumber) => prevPageNumber + 1);
       }
