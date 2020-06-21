@@ -1,3 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=MuseoModerno:wght@700&family=Nanum+Pen+Script&family=Poppins&display=swap");
+
+:root {
+  --white-lighter: #fafafa;
+  --white-light: #f0f0f0;
+  --gray-light: #9e9ea7;
+  --gray-dark: #77777e;
+  --primary-color: hsl(333, 100%, 50%);
+  --primary-color-light: hsl(333, 100%, 67%);
+  --secondary-color: hsl(166, 80%, 50%);
+  --black-transparent-darker: rgba(0, 0, 0, 0.6);
+  --black-transparent-dark: rgba(0, 0, 0, 0.15);
+  --black-transparent-light: rgba(0, 0, 0, 0.1);
+}
+
 *,
 *::before,
 *::after {
@@ -7,16 +22,14 @@
 }
 html {
   font-size: 62.5%; /*for using REM units*/
+  scroll-behavior: smooth;
 }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size: 1.8rem;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: 0.6px;
-  background-color: rgb(20, 30, 40);
-  color: hsl(199, 98%, 48%);
+  background-color: var(--white-light);
 }
 a {
   text-decoration: none;
@@ -39,4 +52,326 @@ dd {
 }
 cite {
   font-style: normal;
+}
+
+header {
+  text-align: center;
+  border-top: 5px solid var(--primary-color);
+  padding: 20px;
+  height: 40vh;
+  position: relative;
+  background: hsla(333, 100%, 67%, 0.6);
+}
+header::before {
+  content: "";
+  background: url("https://images.unsplash.com/photo-1524293568345-75d62c3664f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1554&q=80")
+    center no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.8;
+}
+
+header > p {
+  max-width: 667px;
+  margin: auto;
+  font-size: 1.6rem;
+}
+
+#curve {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -2px;
+}
+
+#path4520 {
+  fill: var(--white-light);
+}
+
+h1.main-title {
+  font-size: 3rem;
+  padding-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.asc {
+  font-family: "Museo Moderno", cursive;
+}
+.ii {
+  font-family: "Nanum Pen Script", cursive;
+  font-size: 3.6rem;
+}
+
+.img-wrapper {
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 1px 5px 20px 0 var(--black-transparent-dark),
+    -1px 5px 20px 0 var(--black-transparent-dark);
+}
+
+.img-wrapper::before {
+  content: "AD";
+  color: var(--white-lighter);
+  background: var(--gray-dark);
+  position: absolute;
+  padding: 2px;
+  border-top-left-radius: 5px;
+}
+
+img.ad {
+  display: block;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ads-container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2.5rem 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 5px 8px 10px 0 rgba(0, 0, 0, 0.15);
+  background: var(--secondary-color);
+}
+
+.adsvert {
+  width: 16rem;
+}
+
+.sponsors-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  font-style: italic;
+  padding-top: 1rem;
+}
+
+.wrapper {
+  padding: 1rem;
+  padding-bottom: 3rem;
+}
+
+.display-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+  grid-auto-flow: dense;
+  gap: 2rem;
+  margin: auto;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  background: var(--white-lighter);
+  font-size: 1.2rem;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 200ms, box-shadow 200ms;
+  border: 1px solid var(--black-transparent-dark);
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 2px 10px 20px 0 var(--black-transparent-light),
+    -2px 10px 20px 0 var(--black-transparent-light);
+}
+
+.product-face {
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  border-bottom: 1px solid hsla(330, 80%, 50%, 0.15);
+}
+
+.product-detail-wrapper {
+  background: linear-gradient(
+    to bottom,
+    var(--white-lighter),
+    var(--black-transparent-light)
+  );
+  padding: 1rem;
+  height: 100%;
+}
+
+.product-detail {
+  margin-top: 5px;
+}
+
+.product-price,
+.price-label {
+  transition: color 200ms;
+}
+
+.product:hover .product-price,
+.product:hover .price-label {
+  color: var(--primary-color);
+}
+
+.product-label {
+  color: var(--gray-light);
+}
+
+.product-unit {
+  color: var(--gray-dark);
+}
+
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+
+.sort-label {
+  font-size: 1.8rem;
+}
+
+#sort {
+  min-width: 7rem;
+  padding: 6px 1.5rem;
+  text-transform: capitalize;
+  border-bottom: 2px solid var(--primary-color-light);
+  border-radius: 3px;
+}
+
+#sort:focus {
+  outline-color: var(--primary-color-light);
+}
+
+.end {
+  font-size: 2rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.last {
+  background: transparent;
+  height: 5rem;
+}
+
+.scroll-to-top {
+  background-color: var(--secondary-color);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  overflow: hidden;
+  transition: box-shadow 300ms, transform 300ms;
+}
+
+.scroll-to-top:hover {
+  box-shadow: 0 0 1rem 0 var(--black-transparent-darker);
+  transform: translateY(-5px) scale(1.02);
+}
+
+.scroll-to-top > a {
+  padding: 1rem;
+  border-radius: 100%;
+}
+
+.scroll-to-top > a:link,
+.scroll-to-top > a:visited {
+  color: var(--primary-color);
+  opacity: 0.8;
+  transition: opacity 200ms;
+}
+
+.scroll-to-top > a:hover,
+.scroll-to-top > a:active {
+  color: var(--primary-color);
+  opacity: 1;
+}
+
+.arrow-top {
+  font-size: 2.5rem;
+}
+
+/* Utilities class */
+.bold {
+  font-weight: bold;
+}
+
+.light-bold {
+  font-weight: 600;
+}
+
+.text-md {
+  font-size: 1.4rem;
+}
+
+.text-lg {
+  font-size: 1.8rem;
+}
+
+.dark-gray {
+  color: var(--gray-dark);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Media Queries */
+@media only screen and (min-width: 680px) {
+  .ads-container {
+    justify-content: space-around;
+    flex-wrap: nowrap;
+  }
+
+  .sponsors-text {
+    width: 75%;
+    padding-left: 1rem;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  header {
+    height: 55vh;
+  }
+
+  .ads-container {
+    max-width: 60%;
+  }
+
+  .display-products {
+    padding: 2rem;
+  }
+
+  .sort-wrapper {
+    padding-left: 2rem;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  header {
+    height: 65vh;
+  }
+
+  .display-products {
+    padding: 3rem;
+    row-gap: 4rem;
+  }
+
+  .sort-wrapper {
+    padding-left: 3rem;
+  }
+
+  .sponsors-text {
+    font-size: 2rem;
+  }
 }
