@@ -6,24 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products Grid</title>
     <script src="../dist/bundle.js" defer async></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1>Products Grid</h1>
+    <header id="header">
+        <h1 class="main-title"><span class="asc">Asc</span><span class="ii">;;</span></h1>
 
         <p>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our
             selection of ascii faces in an exciting range of sizes and prices.</p>
 
         <p>But first, a word from our sponsors:</p>
-        <script>
+        <!-- <script>
             document.write('<img class="ad" src="http://localhost:3000/ads/?r=' + Math.floor(Math.random() * 1000) + '"/>');
-        </script>
+        </script> -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1416.99 174.01" id="curve">
+            <path d="M0,280.8S283.66,59,608.94,163.56s437.93,150.57,808,10.34V309.54H0V280.8Z"
+                transform="translate(0 -135.53)" id="path4520" />
+        </svg>
     </header>
 
     <section class="products">
         ... products go here ...
     </section>
+    <div class='scroll-to-top'>
+        <a href="#header">
+            <ion-icon name='arrow-up-outline' class="arrow-top"></ion-icon>
+        </a>
+    </div>
 </body>
 
 </html>
