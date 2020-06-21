@@ -30,7 +30,11 @@ function ProductList() {
       let prodData = {};
 
       // if any data in localStorage, fetch it
-      if (localData !== null && localData.data.length > 0) {
+      if (
+        localData !== null &&
+        localData.data.length > 0 &&
+        localData.page === _page
+      ) {
         prodData = localData;
       } else {
         // if no data fetch it from the server
@@ -55,7 +59,7 @@ function ProductList() {
 
       setFetchStatus(prodData.status);
       // fetch the next batch
-      cacheNextBatch(pageNumber + 1, sortBy);
+      await cacheNextBatch(pageNumber + 1, sortBy);
     };
 
     setFetchStatus("pending");
@@ -125,14 +129,14 @@ function ProductList() {
         })}
       </div>
       <Spacer size={"20px"} inline='' />
-      <div
-        className={hasMore ? "last" : "last hidden"}
-        ref={hasMore ? lastElementRef : null}></div>
       {fetchStatus === "pending" && hasMore && <Loading />}
       {fetchStatus === "error" && <DisplayError />}
       <Spacer size={"20px"} inline='' />
       {!hasMore && <End />}
       <Spacer size={"30px"} inline='' />
+      <div
+        className={hasMore ? "last" : "last hidden"}
+        ref={hasMore ? lastElementRef : null}></div>
     </div>
   );
 }
