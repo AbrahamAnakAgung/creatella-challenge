@@ -19,12 +19,14 @@ export async function fetchProducts(page, sort) {
         status: "success",
         data,
         hasMore: false,
+        page,
       };
     }
     return {
       status: "success",
       data,
       hasMore: true,
+      page,
     };
   } catch (error) {
     console.error(error);
@@ -32,6 +34,7 @@ export async function fetchProducts(page, sort) {
       status: "error",
       data: [],
       hasMore: false,
+      page,
     };
   }
 }
@@ -43,6 +46,8 @@ export async function fetchProducts(page, sort) {
  * @return {Promise<boolean>} True if success fetching otherwise false
  */
 export async function cacheNextBatch(page, sort) {
+  // clear the storage before saving it.
+  window.localStorage.removeItem(LOCAL_STORAGE_KEY);
   try {
     const result = await fetchProducts(page, sort);
     window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(result));
