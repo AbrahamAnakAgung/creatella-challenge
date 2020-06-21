@@ -121,6 +121,7 @@ h1.main-title {
   position: absolute;
   padding: 2px;
   border-top-left-radius: 5px;
+  font-size: 1.4rem;
 }
 
 img.ad {
@@ -159,6 +160,7 @@ img.ad {
 .wrapper {
   padding: 1rem;
   padding-bottom: 3rem;
+  min-height: 101vh;
 }
 
 .display-products {
