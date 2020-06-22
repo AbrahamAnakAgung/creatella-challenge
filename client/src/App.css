@@ -8,6 +8,7 @@
   --primary-color: hsl(333, 100%, 50%);
   --primary-color-light: hsl(333, 100%, 67%);
   --secondary-color: hsl(166, 80%, 50%);
+  --tertiary-color: #FFEB3B;
   --black-transparent-darker: rgba(0, 0, 0, 0.6);
   --black-transparent-dark: rgba(0, 0, 0, 0.15);
   --black-transparent-light: rgba(0, 0, 0, 0.1);
@@ -56,7 +57,7 @@ cite {
 
 header {
   text-align: center;
-  border-top: 5px solid var(--primary-color);
+  border-top: 5px solid var(--tertiary-color);
   padding: 20px;
   height: 40vh;
   position: relative;
@@ -165,7 +166,7 @@ img.ad {
 
 .display-products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   grid-auto-flow: dense;
   gap: 2rem;
   margin: auto;
