@@ -45,11 +45,11 @@ export const relativeTime = (time) => {
  * @return {string} 
  */
 const calcRelTime = (d, unit, index) => {
-  const timeUnit = ["secs", "mins", "hours", "days", "ago"];
+  const timeUnit = ["secs", "mins", "hours", "days"];
   const time = Math.floor(d / unit);
   let result = // check if time === 1 use singular time unit
     time > 1
       ? `${time} ${timeUnit[index]}`
       : `${time} ${timeUnit[index].slice(0, -1)}`;
-  return result + " " + timeUnit[4];
+  return result + " ago";
 };
