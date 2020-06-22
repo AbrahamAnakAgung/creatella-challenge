@@ -15,8 +15,7 @@ import { LOCAL_STORAGE_KEY } from "../../constants";
 function ProductList() {
   const [products, setProducts] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
-  // status: 'pending', 'success', 'error'
-  const [fetchStatus, setFetchStatus] = React.useState("pending");
+  const [fetchStatus, setFetchStatus] = React.useState("pending"); // status: 'pending', 'success', 'error'
   const [hasMore, setHasMore] = React.useState(true);
   const [sortBy, setSortBy] = React.useState("size");
   const prevProducts = React.useRef([]);
@@ -40,7 +39,9 @@ function ProductList() {
         // if no data fetch it from the server
         prodData = await fetchProducts(_page, _sort);
       }
-      // save and combine raw product data to ref
+      // save and combine raw product data to ref.current
+      // we save it so we can retrieve it later because
+      // products state including ads data, not raw product data from server
       prevProducts.current = [...prevProducts.current, ...prodData.data];
 
       setHasMore(prodData.hasMore);
@@ -49,6 +50,7 @@ function ProductList() {
         const combineData = [];
         for (let i = 0; i < prevProducts.current.length; i++) {
           if (i % 20 === 0 && i !== 0) {
+            // adding ads with id: ads after every 20 products
             combineData.push({ id: "ads" }, prevProducts.current[i]);
           } else {
             combineData.push(prevProducts.current[i]);
