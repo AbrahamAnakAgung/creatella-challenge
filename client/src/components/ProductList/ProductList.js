@@ -112,7 +112,7 @@ function ProductList() {
     <div className='wrapper'>
       <TopAd />
       <Spacer size={"30px"} inline='' />
-      <Sort onSortChange={onSortChange} />
+      <Sort onSortChange={onSortChange} fetchStatus={fetchStatus} />
       <Spacer size={"20px"} inline='' />
       <div className='display-products'>
         {products.map((product, idx) => {

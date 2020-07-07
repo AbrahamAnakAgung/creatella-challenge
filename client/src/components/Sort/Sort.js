@@ -1,12 +1,15 @@
 import * as React from "react";
 
-function Sort({ onSortChange }) {
+function Sort({ onSortChange, fetchStatus }) {
   return (
     <div className='sort-wrapper'>
       <label htmlFor='sort' className='sort-label'>
         Sort by:{" "}
       </label>
-      <select id='sort' onChange={onSortChange}>
+      <select
+        id='sort'
+        onChange={onSortChange}
+        disabled={fetchStatus !== "success"}>
         <option value='size' className='sort-option'>
           size
         </option>
